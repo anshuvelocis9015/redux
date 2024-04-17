@@ -36,6 +36,10 @@ import * as yup from "yup"
 const schema = yup
   .object({
     Username: yup.string().required(),
+    Firstname: yup.string().required(),
+    Lastname: yup.string().required(),
+    // Email: yup.email().required(),
+    // Username: yup.string().required(),
     // age: yup.number().positive().integer().required(),
   })
   .required()
