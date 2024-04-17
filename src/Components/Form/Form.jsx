@@ -2,6 +2,8 @@ import React from 'react'
 import { FaUser, FaYahoo } from "react-icons/fa";
 import './Form.css';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
 // export default function Form() {
 //     // const form = useForm();
@@ -31,8 +33,15 @@ import { useForm } from 'react-hook-form';
 //     )
 // }
 
+const schema = yup
+  .object({
+    Username: yup.string().required(),
+    // age: yup.number().positive().integer().required(),
+  })
+  .required()
+
 export default function Form() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,formState: { errors }, } = useForm({resolver: yupResolver(schema),});
     const gender = [
         {"text":"MALE","value":"male"},
         {"text":"FEMALE","value":"female"},
@@ -45,9 +54,10 @@ export default function Form() {
         <div className="wrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="input-box">
-                    <input  type="text" placeholder="Username" {...register("Username")} />
+                    <input  type="text" placeholder="Username" {...register("Username")}/>
                     <FaUser className="icon" />
                 </div>
+                <span>{errors.Username?.message}</span>
                 <div className="input-box">
                     <input  type="text" placeholder="Firstname" {...register("Firstname")} />
                     <FaUser className="icon" />
@@ -61,7 +71,6 @@ export default function Form() {
                     <FaYahoo className="icon" />
                 </div>
                 <div className="input-box">
-                    {/* <input  type="number" placeholder="Phone Number" {...register("Phone Number")} /> */}
                     <select {...register("gender")}>
                         <option value="">Select Gender</option>
                         {gender.map((option,index) => (
