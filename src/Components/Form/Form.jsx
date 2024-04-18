@@ -3,7 +3,7 @@ import { FaUser, FaYahoo } from "react-icons/fa";
 import './Form.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
+import * as yup from "yup";
 
 // export default function Form() {
 //     // const form = useForm();
@@ -35,12 +35,14 @@ import * as yup from "yup"
 
 const schema = yup
   .object({
-    Username: yup.string().required(),
-    Firstname: yup.string().required(),
-    Lastname: yup.string().required(),
-    // Email: yup.email().required(),
-    // Username: yup.string().required(),
-    // age: yup.number().positive().integer().required(),
+    Username: yup.string().required("username is required"),
+    Firstname: yup.string().required("firstname is required"),
+    Lastname: yup.string().required("lastname is required"),
+    // Email: yup.string().required("email is required"),
+    gender:yup.string().required("Gender is required"),
+    Phone:yup.number().required("number is required").min(10,"this must be a valid phone number"),
+    Password:yup.string().required("password is required").min(6,"this must be a valid password"),
+    ConfirmPassword:yup.string().required("password is required").min(6,"this must be a valid password").oneOf([yup.ref('Password'),'your password does not match']),
   })
   .required()
 
@@ -66,35 +68,41 @@ export default function Form() {
                     <input  type="text" placeholder="Firstname" {...register("Firstname")} />
                     <FaUser className="icon" />
                 </div>
+                <span>{errors.Firstname?.message}</span>
                 <div className="input-box">
                     <input  type="text" placeholder="Lastname" {...register("Lastname")} />
                     <FaUser className="icon" />
                 </div>
+                <span>{errors.Lastname?.message}</span>
                 <div className="input-box">
                     <input type="text" placeholder="Email" {...register("email")} />
                     <FaYahoo className="icon" />
                 </div>
+                <span>{errors.Email?.message}</span>
                 <div className="input-box">
                     <select {...register("gender")}>
                         <option value="">Select Gender</option>
                         {gender.map((option,index) => (
-                            <option key="index" value={option.value}>{option.text}</option>
+                            <option key={index} value={option.value}>{option.text}</option>
                         ))}
                     </select>
                     <FaYahoo className="icon" />
                 </div>
+                <span>{errors.gender?.message}</span>
                 <div className="input-box">
-                    <input  type="number" placeholder="Phone Number" {...register("Phone Number")} />
+                    <input  type="number" placeholder="Phone Number" {...register("Phone")} />
                     <FaYahoo className="icon" />
                 </div>
+                <span>{errors.Phone?.message}</span>
                 <div className="input-box">
                     <input  type="password" placeholder="Password" {...register("Password")} />
                     <FaUser className="icon" />
                 </div>
                 <div className="input-box">
-                    <input  type="password" placeholder="Confirm Password" {...register("Confirm Password")} />
+                    <input  type="password" placeholder="Confirm Password" {...register("ConfirmPassword")} />
                     <FaUser className="icon" />
                 </div>
+                <span>{errors.ConfirmPassword?.message}</span>
 
                 <button type="submit">Submit</button>
             </form>
@@ -102,5 +110,5 @@ export default function Form() {
     )
 }
 
-
+// map filter reducer find
 
