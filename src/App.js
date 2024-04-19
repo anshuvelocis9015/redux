@@ -1,15 +1,18 @@
 // import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Form from './Components/Form/Form';
-import { CounterPage } from './CounterPage';
+import  DisplayPage from './Components/DisplayPage/DisplayPge';
+// import { CounterPage } from './CounterPage';
 
 function App() {
   return (
-    <div className="App"> 
-      {/* <h1>React form</h1> */}
-      <Form />
-      <CounterPage/>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Form />} />
+      <Route path="/display" element={<DisplayPage />} />
+    </Routes>
+  </BrowserRouter>
   );
 }
 
